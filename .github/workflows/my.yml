@@ -18,19 +18,13 @@ jobs:
     - name: 打印当前目录
       run: (Get-Location).Path
 
-        # - run: git clone https://github.com/Microsoft/vcpkg.git
-        # - run: ./vcpkg/bootstrap-vcpkg.bat
-        # - run: ./vcpkg/vcpkg.exe install --x-manifest-root="./"
+    
     - name: 安装与导出
       run: |
         vcpkg.exe install --x-manifest-root="./"
-        vcpkg.exe export --raw --output-dir=./ --output=export --x-all-installed
+        vcpkg.exe export --raw --output-dir="./" --output=export --x-all-installed
         Get-ChildItem
-    # - name: 部署🚀
-    #   uses: JamesIves/github-pages-deploy-action@v4
-    #   with: 
-    #     branch: gh-pages
-    #     folder: build
+
     - name: 上传
       uses: actions/upload-artifact@v4
       with:
@@ -62,7 +56,7 @@ jobs:
           path: house
     
       - name: ls
-        run: ls
+        run: ls house/
       
       - name: Zip
         run: |
