@@ -10,6 +10,7 @@ jobs:
         runs-on: windows-latest
         steps:
         - run: (Get-Location).Path
+        - run: ls
         - run: git clone https://github.com/Microsoft/vcpkg.git
         - run: ./vcpkg/bootstrap-vcpkg.bat
         - run: ./vcpkg/vcpkg.exe install --x-manifest-root="./"
