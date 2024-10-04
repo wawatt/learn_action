@@ -10,4 +10,6 @@ jobs:
         runs-on: windows-latest
         steps:
         - run: (Get-Location).Path
-        - run: vcpkg.exe install --x-manifest-root="D:\a\learn_action\learn_action"
+        - run: git clone https://github.com/Microsoft/vcpkg.git
+        - run: ./vcpkg/bootstrap-vcpkg.sh
+        - run: ./vcpkg/vcpkg.exe install --x-manifest-root="./"
