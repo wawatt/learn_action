@@ -5,8 +5,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - run: pwd
-        - run: ll
+        - run: ls
     job2:
         runs-on: windows-latest
         steps:
-        - run: vcpkg.exe install eigen3:x64-windows
+        - run: vcpkg.exe install --x-manifest-root="vcpkg.json"
