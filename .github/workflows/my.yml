@@ -1,7 +1,7 @@
 name: 打包
 on: 
   push:
-    branches: [main, dev]
+    branches: [master]
 
 permissions:
   contents: write
