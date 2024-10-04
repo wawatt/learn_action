@@ -62,11 +62,12 @@ jobs:
           path: house
     
       - name: ls
-        run: ls house
+        run: ls
       
       - name: Zip
-        run: zip -r ./house/install.zip ./house/vcpkg-export
- 
+        run: |
+          zip -r install.zip house/vcpkg-export
+          mv install.zip house/
       - name: Update Nightly Release
         uses: andelf/nightly-release@main
         env:
