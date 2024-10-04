@@ -9,4 +9,6 @@ jobs:
     job2:
         runs-on: windows-latest
         steps:
+        - run: echo %cd%
+        - run: (Get-Location).Path
         - run: vcpkg.exe install --x-manifest-root="./"
