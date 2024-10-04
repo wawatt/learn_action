@@ -9,4 +9,4 @@ jobs:
     job2:
         runs-on: windows-latest
         steps:
-        - run: node --version
+        - run: vcpkg.exe install eigen3:x64-windows
