@@ -9,7 +9,7 @@ permissions:
 jobs:
   build-windows:
     name: 选择最新windows
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
     - name: 读取仓库内容
@@ -31,7 +31,7 @@ jobs:
     #   with: 
     #     branch: gh-pages
     #     folder: build
-    - name: Upload 
+    - name: 上传
       uses: actions/upload-artifact@v4
       with:
         name: vcpkg-export
@@ -43,31 +43,38 @@ jobs:
     permissions: write-all
 
     steps:
-    - name: Download build vcpkg-export
-      uses: actions/download-artifact@v4
-      with:
-        name: vcpkg-export
-    
-    - name: Create GitHub Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: "nightly"
-        release_name: 'Nightly Release'
-        prerelease: true
-        body: |
-          Release notes Nightly Release
-        draft: false
-        
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: export/
-        asset_name: vcpkg-export.zip
-        asset_content_type: application/zip
+      - name:  读取仓库内容
+        uses: actions/checkout@v4
+        with:
+          submodules: "false"
+          fetch-depth: 0
+          fetch-tags: true
 
+      - name: 读取分支文件
+        id: getbranch
+        shell: bash
+        run: echo branch=$(git describe --tags --exact-match HEAD || echo nightly) >> $GITHUB_OUTPUT
+      
+      - name: Download export dir
+        uses: actions/download-artifact@v4
+        with:
+          name: vcpkg-export
+          path: house
+    
+      - name: ls
+        run: ls house
+      
+      - name: Zip
+        run: zip -r ./house/install.zip ./house/vcpkg-export
+ 
+      - name: Update Nightly Release
+        uses: andelf/nightly-release@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.getbranch.outputs.branch }}
+          name: 'Nightly Release'
+          prerelease: true
+          body: 'nightly release. This release is mainly for internal testing. Stable releases are published to pypi https://pypi.org/project/sapien/'
+          files: |
+            ./house/*.zip
