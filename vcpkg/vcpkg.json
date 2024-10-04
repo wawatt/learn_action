@@ -2,12 +2,12 @@
     "name":"ros-humble",
     
     "dependencies": [
-        "zlib"
+        "zlib",
+        "ruckig"
      ],
     "vcpkg-configuration": {
-        "overlay-ports":[
-            "my-vcpkg-overlay"
-        ],
+        "overlay-triplets": [ "vcpkg-custom-triplets" ],
+        "overlay-ports":[ "my-vcpkg-overlay"],
         "default-registry": {
             "kind": "git",
             "repository": "https://github.com/Microsoft/vcpkg",

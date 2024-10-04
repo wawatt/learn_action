@@ -21,7 +21,7 @@ jobs:
     
     - name: 安装与导出
       run: |
-        vcpkg.exe install --x-manifest-root="./"
+        vcpkg.exe install --x-manifest-root="./vcpkg"
         vcpkg.exe export --raw --output-dir="./" --output=export --x-all-installed
         Get-ChildItem
 
