@@ -53,15 +53,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: vcpkg-export
-          path: house
+          path: my_house
     
       - name: ls
-        run: ls house/
+        run: ls my_house/
       
       - name: Zip
         run: |
-          zip -r install.zip house/vcpkg-export
-          mv install.zip house/
+          zip -r vcpkg-export-2024.zip my_house
       - name: Update Nightly Release
         uses: andelf/nightly-release@main
         env:
