@@ -7,7 +7,7 @@ jobs:
 
     steps:
     - name: 读取仓库内容
-      uses: action/checkout@v4
+      uses: actions/checkout@v4
 
     - name: 打印当前目录
       run: (Get-Location).Path
