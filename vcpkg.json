@@ -2,14 +2,8 @@
     "name":"ros-humble",
     
     "dependencies": [
-        "ruckig"
+        "zlib"
      ],
-    "overrides": [
-        {
-            "name": "eigen3",
-            "version": "3.4.0#4"
-        }
-    ],
     "vcpkg-configuration": {
         "overlay-ports":[
             "my-vcpkg-overlay"
