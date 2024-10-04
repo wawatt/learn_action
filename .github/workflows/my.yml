@@ -24,7 +24,7 @@ jobs:
     - name: 安装与导出
       run: |
         vcpkg.exe install --x-manifest-root="./"
-        vcpkg.exe export --raw --output-dir=. --output=export --x-all-installed
+        vcpkg.exe export --raw --output-dir=./ --output=export --x-all-installed
 
     # - name: 部署🚀
     #   uses: JamesIves/github-pages-deploy-action@v4
@@ -54,7 +54,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.getbranch.outputs.branch }}
+        tag_name: "nightly"
         release_name: 'Nightly Release'
         prerelease: true
         body: |
