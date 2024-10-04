@@ -9,6 +9,5 @@ jobs:
     job2:
         runs-on: windows-latest
         steps:
-        - run: echo %cd%
         - run: (Get-Location).Path
-        - run: vcpkg.exe install --x-manifest-root="./"
+        - run: vcpkg.exe install --x-manifest-root="D:/a/learn_action/learn_action"
