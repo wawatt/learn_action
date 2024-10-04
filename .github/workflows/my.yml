@@ -1,7 +1,13 @@
-on: push
+name: 打包
+on: 
+  push:
+    branches: [main, dev]
+
+permissions:
+  contents: write
 
 jobs:
-  test_vcpkg:
+  build-windows:
     name: 选择最新windows
     runs-on: windows-latest
 
@@ -15,6 +21,53 @@ jobs:
         # - run: git clone https://github.com/Microsoft/vcpkg.git
         # - run: ./vcpkg/bootstrap-vcpkg.bat
         # - run: ./vcpkg/vcpkg.exe install --x-manifest-root="./"
-    - name: 安装
-      run: vcpkg.exe install --x-manifest-root="./"
+    - name: 安装与导出
+      run: |
+        vcpkg.exe install --x-manifest-root="./"
+        vcpkg.exe export --raw --output-dir=. --output=export --x-all-installed
+
+    # - name: 部署🚀
+    #   uses: JamesIves/github-pages-deploy-action@v4
+    #   with: 
+    #     branch: gh-pages
+    #     folder: build
+    - name: Upload 
+      uses: actions/upload-artifact@v4
+      with:
+        name: vcpkg-export
+        path: export/
+  
+  release:
+    runs-on: ubuntu-latest
+    needs: build-windows
+    permissions: write-all
+
+    steps:
+    - name: Download build vcpkg-export
+      uses: actions/download-artifact@v4
+      with:
+        name: vcpkg-export
+    
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.getbranch.outputs.branch }}
+        release_name: 'Nightly Release'
+        prerelease: true
+        body: |
+          Release notes Nightly Release
+        draft: false
+        
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: export/
+        asset_name: vcpkg-export.zip
+        asset_content_type: application/zip
 
