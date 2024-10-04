@@ -25,7 +25,7 @@ jobs:
       run: |
         vcpkg.exe install --x-manifest-root="./"
         vcpkg.exe export --raw --output-dir=./ --output=export --x-all-installed
-
+        Get-ChildItem
     # - name: 部署🚀
     #   uses: JamesIves/github-pages-deploy-action@v4
     #   with: 
