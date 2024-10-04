@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   build-windows:
-    name: 选择最新windows
+    name: 选择windows-2022
     runs-on: windows-2022
 
     steps:
@@ -78,4 +78,4 @@ jobs:
           prerelease: true
           body: 'nightly release. This release is mainly for internal testing. Stable releases are published to pypi https://pypi.org/project/sapien/'
           files: |
-            ./house/*.zip
+            ./*.zip
