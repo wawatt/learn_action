@@ -6,8 +6,8 @@
         "ruckig"
      ],
     "vcpkg-configuration": {
-        "overlay-triplets": [ "vcpkg-custom-triplets" ],
-        "overlay-ports":[ "my-vcpkg-overlay"],
+        "overlay-triplets": [ "vcpkg/vcpkg-custom-triplets" ],
+        "overlay-ports":[ "vcpkg/my-vcpkg-overlay"],
         "default-registry": {
             "kind": "git",
             "repository": "https://github.com/Microsoft/vcpkg",
